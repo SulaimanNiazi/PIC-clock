@@ -28,8 +28,21 @@ void main(void) {
     
     uint8_t digit1 = 0, digit2 = 0, digit3 = 0, digit4 = 0;
     
+    //Initialization of Timer
+    
+    OPTION_REG = 0x0F;
+    TMR0 = 0 ;
+    uint16_t count = 0;
+    
     while(1){
-        digit4++;
+        if(TMR0IF){
+            TMR0IF = 0;
+            count++;
+            if(count >= 152){
+                count = 0;
+                digit4++;
+            }
+        }
         if(digit4 > 9){
             digit4 = 0;
             digit3++;
@@ -48,15 +61,15 @@ void main(void) {
         }
         displayPort = digit4;
         showDigit(4);
-        __delay_ms(10);
+        __delay_ms(1);
         displayPort = digit3;
         showDigit(3);
-        __delay_ms(10);
+        __delay_ms(1);
         displayPort = digit2;
         showDigit(2);
-        __delay_ms(10);
+        __delay_ms(1);
         displayPort = digit1;
         showDigit(1);
-        __delay_ms(10);
+        __delay_ms(1);
     }
 }
