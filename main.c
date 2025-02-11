@@ -15,6 +15,11 @@
 #define _XTAL_FREQ 20000000
 #include <xc.h>
 
+void showDigit(uint16_t digit){
+    displayPort &= 0x0F;
+    displayPort |= 0x10 << (digit - 1);
+}
+
 void main(void) {
     //Initialization of pins and ports
     
@@ -22,6 +27,6 @@ void main(void) {
     displayPort = 0x00;
     
     while(1){
-        
+        showDigit(4);
     }
 }
