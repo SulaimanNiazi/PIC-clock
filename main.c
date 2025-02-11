@@ -26,7 +26,37 @@ void main(void) {
     displayPortDIR = 0x00;
     displayPort = 0x00;
     
+    uint8_t digit1 = 0, digit2 = 0, digit3 = 0, digit4 = 0;
+    
     while(1){
+        digit4++;
+        if(digit4 > 9){
+            digit4 = 0;
+            digit3++;
+            if(digit3 > 6){
+                digit3 = 0;
+                digit2++;
+                if(digit2 > 9){
+                    digit2 = 0;
+                    digit1++;
+                }
+                else if((digit2 == 4)&&(digit1 == 2)){
+                    digit2 = 0;
+                    digit1 = 0;
+                }
+            }
+        }
+        displayPort = digit4;
         showDigit(4);
+        __delay_ms(10);
+        displayPort = digit3;
+        showDigit(3);
+        __delay_ms(10);
+        displayPort = digit2;
+        showDigit(2);
+        __delay_ms(10);
+        displayPort = digit1;
+        showDigit(1);
+        __delay_ms(10);
     }
 }
