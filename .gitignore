@@ -1,0 +1,16 @@
+# Directories
+
+build/*
+nbproject/*
+dist/default/debug/*
+Simulation/*
+
+# Files
+
+Makefile
+
+# Exceptions
+
+!Simulation/*.pdsprj
+!**/*.cof
+!**/*.hex
