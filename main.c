@@ -20,7 +20,7 @@ void showDigit(uint16_t digit){
     displayPort |= 0x10 << (digit - 1);
 }
 
-void main(void){
+int main(void){
     //Initialization of pins and ports
     
     displayPortDIR = 0x00;
@@ -30,13 +30,14 @@ void main(void){
     
     //Initialization of Timer
     
-    OPTION_REG = 0x07;
-    TMR0 = 0 ;
+    T1CON = 0x01;
+    TMR1 = 0;
+
     uint16_t count = 0;
     
     while(1){
-        if(TMR0IF){
-            TMR0IF = 0;
+        if(PIR1bits.TMR1IF){
+            PIR1bits.TMR1IF = 0;
             count++;
             if(count >= 76){
                 count = 0;
@@ -69,15 +70,11 @@ void main(void){
         }
         displayPort = digit4;
         showDigit(4);
-        __delay_ms(1);
         displayPort = digit3;
         showDigit(3);
-        __delay_ms(1);
         displayPort = digit2;
         showDigit(2);
-        __delay_ms(1);
         displayPort = digit1;
         showDigit(1);
-        __delay_ms(1);
     }
 }
