@@ -100,6 +100,7 @@ int main(void){
             displayPort = digit1;
             showDigit(1);
         }
+        count = 0;
         while(mode == 1){
             if(modePin){
                 __delay_ms(10);
