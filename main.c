@@ -24,7 +24,9 @@
 
 void showDigit(uint16_t digit){
     displayPort &= 0x0F;
-    displayPort |= 0x10 << (digit - 1);
+    if(digit > 0){
+        displayPort |= 0x10 << (digit - 1);
+    }
 }
 
 int main(void){
@@ -103,7 +105,7 @@ int main(void){
                 __delay_ms(10);
                 if(modePin){
                     while(modePin);
-                    mode = 0;
+                    mode = 2;
                 }
             }
             if(nextDigitPin){
@@ -128,6 +130,48 @@ int main(void){
                 case 4: displayPort = digit4; break;
                 case 5: choice = 1; break;
             }
+            showDigit(choice);
+        }
+        uint8_t *selectedDigit;
+        switch(choice){
+            case 1: selectedDigit = &digit1; break;
+            case 2: selectedDigit = &digit2; break;
+            case 3: selectedDigit = &digit3; break;
+            case 4: selectedDigit = &digit4; break;
+        }
+        while(mode == 2){
+            if(modePin){
+                __delay_ms(10);
+                if(modePin){
+                    while(modePin);
+                    mode = 0;
+                }
+            }
+            if(nextDigitPin){
+                __delay_ms(10);
+                if(nextDigitPin){
+                    if(*selectedDigit == 9){
+                        *selectedDigit = 0;
+                    }
+                    else{
+                        (*selectedDigit)++;
+                    }
+                    while(nextDigitPin);
+                }
+            }
+            if(prevDigitPin){
+                __delay_ms(10);
+                if(prevDigitPin){
+                    if(*selectedDigit == 0){
+                        *selectedDigit = 9;
+                    }
+                    else{
+                        (*selectedDigit)--;
+                    }
+                    while(prevDigitPin);
+                }
+            }
+            displayPort = *selectedDigit;
             showDigit(choice);
         }
     }
