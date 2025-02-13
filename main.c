@@ -132,10 +132,10 @@ int main(void){
             }
             showDigit(choice);
         }
-        uint8_t *selectedDigit;
+        uint8_t *selectedDigit, maxValue = 9;
         switch(choice){
-            case 1: selectedDigit = &digit1; break;
-            case 2: selectedDigit = &digit2; break;
+            case 1: selectedDigit = &digit1; maxValue = 2; break;
+            case 2: selectedDigit = &digit2; if(digit1 == 2)maxValue = 4; break;
             case 3: selectedDigit = &digit3; break;
             case 4: selectedDigit = &digit4; break;
         }
@@ -152,7 +152,7 @@ int main(void){
             if(nextDigitPin){
                 __delay_ms(10);
                 if(nextDigitPin){
-                    if(*selectedDigit == 9){
+                    if(*selectedDigit == maxValue){
                         *selectedDigit = 0;
                     }
                     else{
@@ -165,7 +165,7 @@ int main(void){
                 __delay_ms(10);
                 if(prevDigitPin){
                     if(*selectedDigit == 0){
-                        *selectedDigit = 9;
+                        *selectedDigit = maxValue;
                     }
                     else{
                         (*selectedDigit)--;
