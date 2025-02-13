@@ -139,6 +139,8 @@ int main(void){
             case 3: selectedDigit = &digit3; break;
             case 4: selectedDigit = &digit4; break;
         }
+        showDigit(0);
+        __delay_ms(500);
         while(mode == 2){
             if(modePin){
                 __delay_ms(10);
