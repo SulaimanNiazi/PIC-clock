@@ -1,6 +1,6 @@
 # PIC Clock
 
-This project is a firmware application designed for the PIC16F877A microcontroller to function as a clock. It displays the time on an LM016L LCD. The firmware is developed using the MPLAB X IDE and the XC8 compiler.
+This project is a firmware application designed for the PIC16F877A microcontroller to function as a clock. It displays the time on 7 segment display. The firmware is developed using the MPLAB X IDE and the XC8 compiler.
 
 ## Table of Contents
 
@@ -51,7 +51,11 @@ After building the project, upload the generated `.hex` or `.cof` file to the PI
 
 ## Usage
 
-1. Connect the microcontroller and the necessary components as per the circuit diagram.
+1. Connect the microcontroller and the necessary components as per the circuit diagram, it is important to note:
+
+    - The first half of the variable `displayPort` gives the BCD output of the digit.
+    - The other half of `displayPort` is for enabling the digits (from 1 to 4).
+
 2. Power on the system.
 3. The LCD will display the current time.
 4. Use the button to set the time if needed.
