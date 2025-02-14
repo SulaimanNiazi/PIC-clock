@@ -66,7 +66,7 @@ int main(void){
     //Initialization of variables
 
     uint16_t sec = 0, mode = 0, selectedDigitNo;
-    uint8_t digit1 = 0, digit2 = 0, digit3 = 0, digit4 = 0;
+    uint8_t digit[4] = {0, 0, 0, 0};
     
     while(1){
         while(mode == 0){
@@ -86,30 +86,30 @@ int main(void){
                 interruptCount = 0;
                 if(sec == 59){
                     sec = 0;
-                    if(digit4 == 9){
-                        digit4 = 0;
-                        if(digit3 == 5){
-                            digit3 = 0;
-                            if(digit2 == 9){
-                                digit2 = 0;
-                                if((digit2 == 3)&&(digit1 == 2)){
-                                    digit2 = 0;
-                                    digit1 = 0;
+                    if(digit[3] == 9){
+                        digit[3] = 0;
+                        if(digit[2] == 5){
+                            digit[2] = 0;
+                            if(digit[1] == 9){
+                                digit[1] = 0;
+                                if((digit[1] == 3)&&(digit[0] == 2)){
+                                    digit[1] = 0;
+                                    digit[0] = 0;
                                 }
                                 else{
-                                    digit1++;
+                                    digit[0]++;
                                 }
                             }
                             else{
-                                digit2++;
+                                digit[1]++;
                             }
                         }
                         else{
-                            digit3++;
+                            digit[2]++;
                         }
                     }
                     else{
-                        digit4++;
+                        digit[3]++;
                     }
                 }
                 else{
@@ -117,14 +117,10 @@ int main(void){
                 }
             }
 
-            displayPort = digit4;
-            showDigit(4);
-            displayPort = digit3;
-            showDigit(3);
-            displayPort = digit2;
-            showDigit(2);
-            displayPort = digit1;
-            showDigit(1);
+            for(uint16_t x = 0; x < 4; x++){
+                displayPort = digit[x];
+                showDigit(x + 1);
+            }
         }
 
         interruptCount = 0, selectedDigitNo = 1;
@@ -154,21 +150,19 @@ int main(void){
             
             switch(selectedDigitNo){
                 case 0: selectedDigitNo = 4; break;
-                case 1: displayPort = digit1; break;
-                case 2: displayPort = digit2; break;
-                case 3: displayPort = digit3; break;
-                case 4: displayPort = digit4; break;
+                case 1: displayPort = digit[0]; break;
+                case 2: displayPort = digit[1]; break;
+                case 3: displayPort = digit[2]; break;
+                case 4: displayPort = digit[3]; break;
                 case 5: selectedDigitNo = 1; break;
             }
             showDigit(selectedDigitNo);
         }
         
-        uint8_t *selectedDigit, digitMaxVal = 9;
+        uint8_t digitMaxVal = 9;
         switch(selectedDigitNo){
-            case 1: selectedDigit = &digit1; digitMaxVal = 2; break;
-            case 2: selectedDigit = &digit2; if(digit1 == 2)digitMaxVal = 4; break;
-            case 3: selectedDigit = &digit3; break;
-            case 4: selectedDigit = &digit4; break;
+            case 1: digitMaxVal = 2; break;
+            case 2: if(digit[0] == 2)digitMaxVal = 4; break;
         }
         showDigit(0);
         __delay_ms(500);
@@ -184,11 +178,11 @@ int main(void){
             if(nextDigitPin){
                 __delay_ms(10);
                 if(nextDigitPin){
-                    if(*selectedDigit == digitMaxVal){
-                        *selectedDigit = 0;
+                    if(digit[selectedDigitNo - 1] == digitMaxVal){
+                        digit[selectedDigitNo - 1] = 0;
                     }
                     else{
-                        (*selectedDigit)++;
+                        (digit[selectedDigitNo - 1])++;
                     }
                     while(nextDigitPin);
                 }
@@ -196,17 +190,17 @@ int main(void){
             if(prevDigitPin){
                 __delay_ms(10);
                 if(prevDigitPin){
-                    if(*selectedDigit == 0){
-                        *selectedDigit = digitMaxVal;
+                    if(digit[selectedDigitNo - 1] == 0){
+                        digit[selectedDigitNo - 1] = digitMaxVal;
                     }
                     else{
-                        (*selectedDigit)--;
+                        (digit[selectedDigitNo - 1])--;
                     }
                     while(prevDigitPin);
                 }
             }
             
-            displayPort = *selectedDigit;
+            displayPort = digit[selectedDigitNo - 1];
             showDigit(selectedDigitNo);
         }
     }
