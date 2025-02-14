@@ -7,7 +7,6 @@
 
 //**Define pins and ports**
 
-#include <builtins.h>
 #define displayPort PORTB
 #define displayPortDIR TRISB
 #define modePin PORTDbits.RD0
@@ -21,6 +20,10 @@
 
 #define _XTAL_FREQ 20000000
 #include <xc.h>
+#include <builtins.h>
+#include <pic16f877a.h>
+
+uint16_t interruptCount = 0;
 
 void showDigit(uint16_t digit){
     displayPort &= 0x0F;
@@ -38,16 +41,31 @@ int main(void){
     nextDigitPinDIR = 1;
     prevDigitPinDIR = 1;
     
+    //Initialization of Timer1 and CCP1 module
+    
+    TRISCbits.TRISC2 = 1;
+    while(!PORTCbits.RC2){
+        __delay_ms(500);
+        break;
+    }
+    if(PORTCbits.RC2){
+        INTCONbits.GIE = 1;
+        INTCONbits.PEIE = 1;    //enable all peripheral interrupts
+        PIE1bits.CCP1IE = 1;
+        PIR1bits.CCP1IF = 0;
+        CCP1CON = 0x05;         //capture mode every rising edge
+    }
+    else{
+        T1CON = 0x31;           //16-bit timer, internal clock, 1:8 prescaler
+        TMR1H = 0x0B;           //65536 - 3036 = 62500
+        TMR1L = 0xDB;
+    }
+
+    //Initialization of variables
+
+    uint16_t sec = 0, mode = 0, selectedDigitNo;
     uint8_t digit1 = 0, digit2 = 0, digit3 = 0, digit4 = 0;
     
-    //Initialization of Timer
-    
-    T1CON = 0x31;
-    TMR1H = 0x0B;
-    TMR1L = 0xDB;
-
-    uint16_t count = 0, mode = 0, choice = 1;
-
     while(1){
         while(mode == 0){
             if(modePin){
@@ -59,8 +77,13 @@ int main(void){
             }
             if(PIR1bits.TMR1IF){
                 PIR1bits.TMR1IF = 0;
-                if(count >= 9){
-                    count = 0;
+                interruptCount++;
+            }
+
+            if(interruptCount > 9){
+                interruptCount = 0;
+                if(sec == 59){
+                    sec = 0;
                     if(digit4 == 9){
                         digit4 = 0;
                         if(digit3 == 5){
@@ -88,9 +111,10 @@ int main(void){
                     }
                 }
                 else{
-                    count++;
+                    sec++;
                 }
             }
+
             displayPort = digit4;
             showDigit(4);
             displayPort = digit3;
@@ -100,7 +124,9 @@ int main(void){
             displayPort = digit1;
             showDigit(1);
         }
-        count = 0;
+
+        interruptCount = 0, selectedDigitNo = 1;
+        
         while(mode == 1){
             if(modePin){
                 __delay_ms(10);
@@ -112,36 +138,39 @@ int main(void){
             if(nextDigitPin){
                 __delay_ms(10);
                 if(nextDigitPin){
-                    choice++;
+                    selectedDigitNo++;
                     while(nextDigitPin);
                 }
             }
             if(prevDigitPin){
                 __delay_ms(10);
                 if(prevDigitPin){
-                    choice--;
+                    selectedDigitNo--;
                     while(prevDigitPin);
                 }
             }
-            switch(choice){
-                case 0: choice = 4; break;
+            
+            switch(selectedDigitNo){
+                case 0: selectedDigitNo = 4; break;
                 case 1: displayPort = digit1; break;
                 case 2: displayPort = digit2; break;
                 case 3: displayPort = digit3; break;
                 case 4: displayPort = digit4; break;
-                case 5: choice = 1; break;
+                case 5: selectedDigitNo = 1; break;
             }
-            showDigit(choice);
+            showDigit(selectedDigitNo);
         }
-        uint8_t *selectedDigit, maxValue = 9;
-        switch(choice){
-            case 1: selectedDigit = &digit1; maxValue = 2; break;
-            case 2: selectedDigit = &digit2; if(digit1 == 2)maxValue = 4; break;
+        
+        uint8_t *selectedDigit, digitMaxVal = 9;
+        switch(selectedDigitNo){
+            case 1: selectedDigit = &digit1; digitMaxVal = 2; break;
+            case 2: selectedDigit = &digit2; if(digit1 == 2)digitMaxVal = 4; break;
             case 3: selectedDigit = &digit3; break;
             case 4: selectedDigit = &digit4; break;
         }
         showDigit(0);
         __delay_ms(500);
+        
         while(mode == 2){
             if(modePin){
                 __delay_ms(10);
@@ -153,7 +182,7 @@ int main(void){
             if(nextDigitPin){
                 __delay_ms(10);
                 if(nextDigitPin){
-                    if(*selectedDigit == maxValue){
+                    if(*selectedDigit == digitMaxVal){
                         *selectedDigit = 0;
                     }
                     else{
@@ -166,7 +195,7 @@ int main(void){
                 __delay_ms(10);
                 if(prevDigitPin){
                     if(*selectedDigit == 0){
-                        *selectedDigit = maxValue;
+                        *selectedDigit = digitMaxVal;
                     }
                     else{
                         (*selectedDigit)--;
@@ -174,8 +203,16 @@ int main(void){
                     while(prevDigitPin);
                 }
             }
+            
             displayPort = *selectedDigit;
-            showDigit(choice);
+            showDigit(selectedDigitNo);
         }
+    }
+}
+
+void __interrupt() ISR(void){
+    if(PIR1bits.CCP1IF){
+        PIR1bits.CCP1IF = 0;
+        interruptCount++;
     }
 }
