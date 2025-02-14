@@ -15,6 +15,8 @@
 #define nextDigitPinDIR TRISDbits.TRISD1
 #define prevDigitPin PORTDbits.RD2
 #define prevDigitPinDIR TRISDbits.TRISD2
+#define CCPclockPin PORTCbits.RC2
+#define CCPclockPinDIR TRISCbits.TRISC2
 
 //*************************
 
@@ -43,12 +45,12 @@ int main(void){
     
     //Initialization of Timer1 and CCP1 module
     
-    TRISCbits.TRISC2 = 1;
-    while(!PORTCbits.RC2){
+    CCPclockPinDIR = 1;
+    while(!CCPclockPin){
         __delay_ms(500);
         break;
     }
-    if(PORTCbits.RC2){
+    if(CCPclockPin){
         INTCONbits.GIE = 1;
         INTCONbits.PEIE = 1;    //enable all peripheral interrupts
         PIE1bits.CCP1IE = 1;
