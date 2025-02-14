@@ -123,6 +123,7 @@ int main(void){
             }
         }
 
+        PIE1bits.CCP1IE = 0;
         interruptCount = 0, selectedDigitNo = 1;
         
         while(mode == 1){
@@ -203,6 +204,8 @@ int main(void){
             displayPort = digit[selectedDigitNo - 1];
             showDigit(selectedDigitNo);
         }
+
+        PIE1bits.CCP1IE = 1;
     }
 }
 
