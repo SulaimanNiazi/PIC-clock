@@ -55,7 +55,7 @@ After building the project, upload the generated `.hex` or `.cof` file to the PI
 
     - The first half of the variable `displayPort` gives the BCD output of the digit.
     - The other half of `displayPort` is for enabling the digits (from 1 to 4).
-    - We can provide 10Hz 5V clock signal input, before turning PIC on, for external clock sync.
+    - We can provide 25Hz 5V clock signal input, before turning PIC on, for external clock sync.
 
 2. Power on the system.
 3. The LCD will display the current time.
