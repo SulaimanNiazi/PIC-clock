@@ -2,6 +2,11 @@
 
 This project is a firmware application designed for the PIC16F877A microcontroller to function as a clock. It displays the time on 7 segment display. The firmware is developed using the MPLAB X IDE and the XC8 compiler.
 
+<video title="PIC Clock Simulation Video" width="100%" controls autoplay>
+    <source src="Simulation/PIC Clock Simulation Video.mp4">
+    Your browser does not support the video tag.
+</video>
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
