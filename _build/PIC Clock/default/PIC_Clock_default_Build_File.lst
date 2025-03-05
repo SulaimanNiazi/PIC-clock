@@ -1,0 +1,1789 @@
+
+
+Microchip MPLAB XC8 Assembler V3.00 build 20241204225717 
+                                                                                               Fri Feb 14 21:09:28 2025
+
+Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1 
+     1                           	processor	16F877A
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	cinit,global,class=CODE,space=0,merge=1,delta=2
+     5                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1,noexec
+     6                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     7                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1,noexec
+     8                           	psect	maintext,global,class=CODE,space=0,split=1,delta=2
+     9                           	psect	text1,local,class=CODE,space=0,merge=1,delta=2
+    10                           	psect	text2,local,class=CODE,space=0,merge=1,delta=2
+    11                           	psect	intentry,global,class=CODE,space=0,delta=2
+    12                           	dabs	1,0x7E,2
+    13     0000                     
+    14                           ; Generated 12/10/2023 GMT
+    15                           ; 
+    16                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    17                           ; All rights reserved.
+    18                           ; 
+    19                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    20                           ; 
+    21                           ; Redistribution and use in source and binary forms, with or without modification, are
+    22                           ; permitted provided that the following conditions are met:
+    23                           ; 
+    24                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    25                           ;        conditions and the following disclaimer.
+    26                           ; 
+    27                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    28                           ;        of conditions and the following disclaimer in the documentation and/or other
+    29                           ;        materials provided with the distribution. Publication is not required when
+    30                           ;        this file is used in an embedded application.
+    31                           ; 
+    32                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    33                           ;        software without specific prior written permission.
+    34                           ; 
+    35                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    36                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    37                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    38                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    39                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    40                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    41                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    42                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    43                           ; 
+    44                           ; 
+    45                           ; Code-generator required, PIC16F877A Definitions
+    46                           ; 
+    47                           ; SFR Addresses
+    48     0004                     fsr             equ	4
+    49     0004                     fsr0            equ	4
+    50     0000                     indf            equ	0
+    51     0000                     indf0           equ	0
+    52     0002                     pc              equ	2
+    53     0002                     pcl             equ	2
+    54     000A                     pclath          equ	10
+    55     0003                     status          equ	3
+    56     0000                     INDF            equ	0	;# 
+    57     0001                     TMR0            equ	1	;# 
+    58     0002                     PCL             equ	2	;# 
+    59     0003                     STATUS          equ	3	;# 
+    60     0004                     FSR             equ	4	;# 
+    61     0005                     PORTA           equ	5	;# 
+    62     0006                     PORTB           equ	6	;# 
+    63     0007                     PORTC           equ	7	;# 
+    64     0008                     PORTD           equ	8	;# 
+    65     0009                     PORTE           equ	9	;# 
+    66     000A                     PCLATH          equ	10	;# 
+    67     000B                     INTCON          equ	11	;# 
+    68     000C                     PIR1            equ	12	;# 
+    69     000D                     PIR2            equ	13	;# 
+    70     000E                     TMR1            equ	14	;# 
+    71     000E                     TMR1L           equ	14	;# 
+    72     000F                     TMR1H           equ	15	;# 
+    73     0010                     T1CON           equ	16	;# 
+    74     0011                     TMR2            equ	17	;# 
+    75     0012                     T2CON           equ	18	;# 
+    76     0013                     SSPBUF          equ	19	;# 
+    77     0014                     SSPCON          equ	20	;# 
+    78     0015                     CCPR1           equ	21	;# 
+    79     0015                     CCPR1L          equ	21	;# 
+    80     0016                     CCPR1H          equ	22	;# 
+    81     0017                     CCP1CON         equ	23	;# 
+    82     0018                     RCSTA           equ	24	;# 
+    83     0019                     TXREG           equ	25	;# 
+    84     001A                     RCREG           equ	26	;# 
+    85     001B                     CCPR2           equ	27	;# 
+    86     001B                     CCPR2L          equ	27	;# 
+    87     001C                     CCPR2H          equ	28	;# 
+    88     001D                     CCP2CON         equ	29	;# 
+    89     001E                     ADRESH          equ	30	;# 
+    90     001F                     ADCON0          equ	31	;# 
+    91     0081                     OPTION_REG      equ	129	;# 
+    92     0085                     TRISA           equ	133	;# 
+    93     0086                     TRISB           equ	134	;# 
+    94     0087                     TRISC           equ	135	;# 
+    95     0088                     TRISD           equ	136	;# 
+    96     0089                     TRISE           equ	137	;# 
+    97     008C                     PIE1            equ	140	;# 
+    98     008D                     PIE2            equ	141	;# 
+    99     008E                     PCON            equ	142	;# 
+   100     0091                     SSPCON2         equ	145	;# 
+   101     0092                     PR2             equ	146	;# 
+   102     0093                     SSPADD          equ	147	;# 
+   103     0094                     SSPSTAT         equ	148	;# 
+   104     0098                     TXSTA           equ	152	;# 
+   105     0099                     SPBRG           equ	153	;# 
+   106     009C                     CMCON           equ	156	;# 
+   107     009D                     CVRCON          equ	157	;# 
+   108     009E                     ADRESL          equ	158	;# 
+   109     009F                     ADCON1          equ	159	;# 
+   110     010C                     EEDATA          equ	268	;# 
+   111     010D                     EEADR           equ	269	;# 
+   112     010E                     EEDATH          equ	270	;# 
+   113     010F                     EEADRH          equ	271	;# 
+   114     018C                     EECON1          equ	396	;# 
+   115     018D                     EECON2          equ	397	;# 
+   116     0000                     INDF            equ	0	;# 
+   117     0001                     TMR0            equ	1	;# 
+   118     0002                     PCL             equ	2	;# 
+   119     0003                     STATUS          equ	3	;# 
+   120     0004                     FSR             equ	4	;# 
+   121     0005                     PORTA           equ	5	;# 
+   122     0006                     PORTB           equ	6	;# 
+   123     0007                     PORTC           equ	7	;# 
+   124     0008                     PORTD           equ	8	;# 
+   125     0009                     PORTE           equ	9	;# 
+   126     000A                     PCLATH          equ	10	;# 
+   127     000B                     INTCON          equ	11	;# 
+   128     000C                     PIR1            equ	12	;# 
+   129     000D                     PIR2            equ	13	;# 
+   130     000E                     TMR1            equ	14	;# 
+   131     000E                     TMR1L           equ	14	;# 
+   132     000F                     TMR1H           equ	15	;# 
+   133     0010                     T1CON           equ	16	;# 
+   134     0011                     TMR2            equ	17	;# 
+   135     0012                     T2CON           equ	18	;# 
+   136     0013                     SSPBUF          equ	19	;# 
+   137     0014                     SSPCON          equ	20	;# 
+   138     0015                     CCPR1           equ	21	;# 
+   139     0015                     CCPR1L          equ	21	;# 
+   140     0016                     CCPR1H          equ	22	;# 
+   141     0017                     CCP1CON         equ	23	;# 
+   142     0018                     RCSTA           equ	24	;# 
+   143     0019                     TXREG           equ	25	;# 
+   144     001A                     RCREG           equ	26	;# 
+   145     001B                     CCPR2           equ	27	;# 
+   146     001B                     CCPR2L          equ	27	;# 
+   147     001C                     CCPR2H          equ	28	;# 
+   148     001D                     CCP2CON         equ	29	;# 
+   149     001E                     ADRESH          equ	30	;# 
+   150     001F                     ADCON0          equ	31	;# 
+   151     0081                     OPTION_REG      equ	129	;# 
+   152     0085                     TRISA           equ	133	;# 
+   153     0086                     TRISB           equ	134	;# 
+   154     0087                     TRISC           equ	135	;# 
+   155     0088                     TRISD           equ	136	;# 
+   156     0089                     TRISE           equ	137	;# 
+   157     008C                     PIE1            equ	140	;# 
+   158     008D                     PIE2            equ	141	;# 
+   159     008E                     PCON            equ	142	;# 
+   160     0091                     SSPCON2         equ	145	;# 
+   161     0092                     PR2             equ	146	;# 
+   162     0093                     SSPADD          equ	147	;# 
+   163     0094                     SSPSTAT         equ	148	;# 
+   164     0098                     TXSTA           equ	152	;# 
+   165     0099                     SPBRG           equ	153	;# 
+   166     009C                     CMCON           equ	156	;# 
+   167     009D                     CVRCON          equ	157	;# 
+   168     009E                     ADRESL          equ	158	;# 
+   169     009F                     ADCON1          equ	159	;# 
+   170     010C                     EEDATA          equ	268	;# 
+   171     010D                     EEADR           equ	269	;# 
+   172     010E                     EEDATH          equ	270	;# 
+   173     010F                     EEADRH          equ	271	;# 
+   174     018C                     EECON1          equ	396	;# 
+   175     018D                     EECON2          equ	397	;# 
+   176     0008                     _PORTDbits      set	8
+   177     000E                     _TMR1L          set	14
+   178     000F                     _TMR1H          set	15
+   179     0010                     _T1CON          set	16
+   180     0017                     _CCP1CON        set	23
+   181     000C                     _PIR1bits       set	12
+   182     000B                     _INTCONbits     set	11
+   183     0007                     _PORTCbits      set	7
+   184     0006                     _PORTB          set	6
+   185     008C                     _PIE1bits       set	140
+   186     0087                     _TRISCbits      set	135
+   187     0088                     _TRISDbits      set	136
+   188     0086                     _TRISB          set	134
+   189                           
+   190                           	psect	cinit
+   191     000F                     start_initialization:	
+   192                           ; #config settings
+   193                           
+   194     000F                     __initialization:
+   195                           
+   196                           ; Clear objects allocated to BANK0
+   197     000F  1283               	bcf	3,5	;RP0=0, select bank0
+   198     0010  1303               	bcf	3,6	;RP1=0, select bank0
+   199     0011  01AD               	clrf	__pbssBANK0& (0+127)
+   200     0012  01AE               	clrf	(__pbssBANK0+1)& (0+127)
+   201     0013  01AF               	clrf	(__pbssBANK0+2)& (0+127)
+   202     0014  01B0               	clrf	(__pbssBANK0+3)& (0+127)
+   203     0015  01B1               	clrf	(__pbssBANK0+4)& (0+127)
+   204     0016  01B2               	clrf	(__pbssBANK0+5)& (0+127)
+   205     0017                     end_of_initialization:	
+   206                           ;End of C runtime variable initialization code
+   207                           
+   208     0017                     __end_of__initialization:
+   209     0017  0183               	clrf	3
+   210     0018  120A  118A  281B   	ljmp	_main	;jump to C main() function
+   211                           
+   212                           	psect	bssBANK0
+   213     002D                     __pbssBANK0:
+   214     002D                     main@F1013:
+   215     002D                     	ds	4
+   216     0031                     _interruptCount:
+   217     0031                     	ds	2
+   218                           
+   219                           	psect	cstackCOMMON
+   220     0070                     __pcstackCOMMON:
+   221     0070                     ?_ISR:
+   222     0070                     ?_main:	
+   223                           ; 1 bytes @ 0x0
+   224                           
+   225     0070                     ??_ISR:	
+   226                           ; 2 bytes @ 0x0
+   227                           
+   228                           
+   229                           ; 1 bytes @ 0x0
+   230     0070                     	ds	2
+   231     0072                     ?_showDigit:
+   232     0072                     showDigit@digit:	
+   233                           ; 1 bytes @ 0x2
+   234                           
+   235                           
+   236                           ; 2 bytes @ 0x2
+   237     0072                     	ds	2
+   238     0074                     ??_showDigit:
+   239                           
+   240                           ; 1 bytes @ 0x4
+   241     0074                     	ds	1
+   242     0075                     ??_main:
+   243                           
+   244                           ; 1 bytes @ 0x5
+   245     0075                     	ds	3
+   246                           
+   247                           	psect	cstackBANK0
+   248     0020                     __pcstackBANK0:
+   249     0020                     main@sec:
+   250                           
+   251                           ; 2 bytes @ 0x0
+   252     0020                     	ds	2
+   253     0022                     main@digitMaxVal:
+   254                           
+   255                           ; 1 bytes @ 0x2
+   256     0022                     	ds	1
+   257     0023                     main@mode:
+   258                           
+   259                           ; 2 bytes @ 0x3
+   260     0023                     	ds	2
+   261     0025                     main@x:
+   262                           
+   263                           ; 2 bytes @ 0x5
+   264     0025                     	ds	2
+   265     0027                     main@digit:
+   266                           
+   267                           ; 4 bytes @ 0x7
+   268     0027                     	ds	4
+   269     002B                     main@selectedDigitNo:
+   270                           
+   271                           ; 2 bytes @ 0xB
+   272     002B                     	ds	2
+   273                           
+   274                           	psect	maintext
+   275     001B                     __pmaintext:	
+   276 ;;
+   277 ;;Main: autosize = 0, tempsize = 3, incstack = 0, save=0
+   278 ;;
+   279 ;; *************** function _main *****************
+   280 ;; Defined at:
+   281 ;;		line 37 in file "C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c"
+   282 ;; Parameters:    Size  Location     Type
+   283 ;;		None
+   284 ;; Auto vars:     Size  Location     Type
+   285 ;;  x               2    5[BANK0 ] unsigned short 
+   286 ;;  digitMaxVal     1    2[BANK0 ] unsigned char 
+   287 ;;  digit           4    7[BANK0 ] unsigned char [4]
+   288 ;;  selectedDigi    2   11[BANK0 ] unsigned short 
+   289 ;;  mode            2    3[BANK0 ] unsigned short 
+   290 ;;  sec             2    0[BANK0 ] unsigned short 
+   291 ;; Return value:  Size  Location     Type
+   292 ;;                  2   38[None  ] int 
+   293 ;; Registers used:
+   294 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+   295 ;; Tracked objects:
+   296 ;;		On entry : B00/0
+   297 ;;		On exit  : 0/0
+   298 ;;		Unchanged: 0/0
+   299 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   300 ;;      Params:         0       0       0       0       0
+   301 ;;      Locals:         0      13       0       0       0
+   302 ;;      Temps:          3       0       0       0       0
+   303 ;;      Totals:         3      13       0       0       0
+   304 ;;Total ram usage:       16 bytes
+   305 ;; Hardware stack levels required when called: 2
+   306 ;; This function calls:
+   307 ;;		_showDigit
+   308 ;; This function is called by:
+   309 ;;		Startup code after reset
+   310 ;; This function uses a non-reentrant model
+   311 ;;
+   312                           
+   313     001B                     _main:	
+   314                           ;psect for function _main
+   315                           
+   316     001B                     l936:	
+   317                           ;incstack = 0
+   318                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+   319                           
+   320                           
+   321                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 40:     TRISB = 0x00;
+   322     001B  1683               	bsf	3,5	;RP0=1, select bank1
+   323     001C  1303               	bcf	3,6	;RP1=0, select bank1
+   324     001D  0186               	clrf	6	;volatile
+   325                           
+   326                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 41:     PORTB = 0x00;
+   327     001E  1283               	bcf	3,5	;RP0=0, select bank0
+   328     001F  1303               	bcf	3,6	;RP1=0, select bank0
+   329     0020  0186               	clrf	6	;volatile
+   330     0021                     l938:
+   331                           
+   332                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 42:     TRISDbits.TRISD0 = 
+      +                          1;
+   333     0021  1683               	bsf	3,5	;RP0=1, select bank1
+   334     0022  1303               	bcf	3,6	;RP1=0, select bank1
+   335     0023  1408               	bsf	8,0	;volatile
+   336     0024                     l940:
+   337                           
+   338                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 43:     TRISDbits.TRISD1 = 
+      +                          1;
+   339     0024  1488               	bsf	8,1	;volatile
+   340     0025                     l942:
+   341                           
+   342                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 44:     TRISDbits.TRISD2 = 
+      +                          1;
+   343     0025  1508               	bsf	8,2	;volatile
+   344     0026                     l944:
+   345                           
+   346                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 48:     TRISCbits.TRISC2 = 
+      +                          1;
+   347     0026  1507               	bsf	7,2	;volatile
+   348                           
+   349                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 49:     while(!PORTCbits.RC
+      +                          2){
+   350     0027  2836               	goto	l39
+   351     0028                     l946:
+   352                           
+   353                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 50:         _delay((unsigne
+      +                          d long)((500)*(20000000/4000.0)));
+   354     0028  300D               	movlw	13
+   355     0029  00F7               	movwf	??_main+2
+   356     002A  30AF               	movlw	175
+   357     002B  00F6               	movwf	??_main+1
+   358     002C  30B6               	movlw	182
+   359     002D  00F5               	movwf	??_main
+   360     002E                     u837:
+   361     002E  0BF5               	decfsz	??_main,f
+   362     002F  282E               	goto	u837
+   363     0030  0BF6               	decfsz	??_main+1,f
+   364     0031  282E               	goto	u837
+   365     0032  0BF7               	decfsz	??_main+2,f
+   366     0033  282E               	goto	u837
+   367     0034  0000               	nop
+   368                           
+   369                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 51:         break;
+   370     0035  283C               	goto	l41
+   371     0036                     l39:	
+   372                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 52:     }
+   373                           
+   374                           
+   375                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 49:     while(!PORTCbits.RC
+      +                          2){
+   376     0036  1283               	bcf	3,5	;RP0=0, select bank0
+   377     0037  1303               	bcf	3,6	;RP1=0, select bank0
+   378     0038  1D07               	btfss	7,2	;volatile
+   379     0039  283B               	goto	u441
+   380     003A  283C               	goto	u440
+   381     003B                     u441:
+   382     003B  2828               	goto	l946
+   383     003C                     u440:
+   384     003C                     l41:
+   385                           
+   386                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 53:     if(PORTCbits.RC2){
+   387     003C  1283               	bcf	3,5	;RP0=0, select bank0
+   388     003D  1303               	bcf	3,6	;RP1=0, select bank0
+   389     003E  1D07               	btfss	7,2	;volatile
+   390     003F  2841               	goto	u451
+   391     0040  2842               	goto	u450
+   392     0041                     u451:
+   393     0041  284D               	goto	l42
+   394     0042                     u450:
+   395     0042                     l948:
+   396                           
+   397                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 54:         INTCONbits.GIE 
+      +                          = 1;
+   398     0042  178B               	bsf	11,7	;volatile
+   399                           
+   400                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 55:         INTCONbits.PEIE
+      +                           = 1;
+   401     0043  170B               	bsf	11,6	;volatile
+   402                           
+   403                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 56:         PIE1bits.CCP1IE
+      +                           = 1;
+   404     0044  1683               	bsf	3,5	;RP0=1, select bank1
+   405     0045  1303               	bcf	3,6	;RP1=0, select bank1
+   406     0046  150C               	bsf	12,2	;volatile
+   407                           
+   408                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 57:         PIR1bits.CCP1IF
+      +                           = 0;
+   409     0047  1283               	bcf	3,5	;RP0=0, select bank0
+   410     0048  1303               	bcf	3,6	;RP1=0, select bank0
+   411     0049  110C               	bcf	12,2	;volatile
+   412                           
+   413                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 58:         CCP1CON = 0x05;
+   414     004A  3005               	movlw	5
+   415     004B  0097               	movwf	23	;volatile
+   416                           
+   417                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 59:     }
+   418     004C  2853               	goto	l950
+   419     004D                     l42:	
+   420                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 60:     else{
+   421                           
+   422                           
+   423                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 61:         T1CON = 0x31;
+   424     004D  3031               	movlw	49
+   425     004E  0090               	movwf	16	;volatile
+   426                           
+   427                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 62:         TMR1H = 0x0B;
+   428     004F  300B               	movlw	11
+   429     0050  008F               	movwf	15	;volatile
+   430                           
+   431                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 63:         TMR1L = 0xDB;
+   432     0051  30DB               	movlw	219
+   433     0052  008E               	movwf	14	;volatile
+   434     0053                     l950:
+   435                           
+   436                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 68:     uint16_t sec = 0, m
+      +                          ode = 0, selectedDigitNo;
+   437     0053  01A0               	clrf	main@sec
+   438     0054  01A1               	clrf	main@sec+1
+   439     0055  01A3               	clrf	main@mode
+   440     0056  01A4               	clrf	main@mode+1
+   441     0057                     l952:
+   442                           
+   443                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 69:     uint8_t digit[4] = 
+      +                          {0, 0, 0, 0};
+   444     0057  3000               	movlw	0
+   445     0058  00AA               	movwf	main@digit+3
+   446     0059  3000               	movlw	0
+   447     005A  00A9               	movwf	main@digit+2
+   448     005B  3000               	movlw	0
+   449     005C  00A8               	movwf	main@digit+1
+   450     005D  3000               	movlw	0
+   451     005E  00A7               	movwf	main@digit
+   452     005F  28F6               	goto	l1016
+   453     0060                     l48:
+   454                           
+   455                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 73:             if(PORTDbit
+      +                          s.RD0){
+   456     0060  1C08               	btfss	8,0	;volatile
+   457     0061  2863               	goto	u461
+   458     0062  2864               	goto	u460
+   459     0063                     u461:
+   460     0063  287B               	goto	l962
+   461     0064                     u460:
+   462     0064                     l954:
+   463                           
+   464                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 74:                 _delay(
+      +                          (unsigned long)((10)*(20000000/4000.0)));
+   465     0064  3041               	movlw	65
+   466     0065  00F6               	movwf	??_main+1
+   467     0066  30EE               	movlw	238
+   468     0067  00F5               	movwf	??_main
+   469     0068                     u847:
+   470     0068  0BF5               	decfsz	??_main,f
+   471     0069  2868               	goto	u847
+   472     006A  0BF6               	decfsz	??_main+1,f
+   473     006B  2868               	goto	u847
+   474     006C  0000               	nop
+   475     006D                     l956:
+   476                           
+   477                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 75:                 if(PORT
+      +                          Dbits.RD0){
+   478     006D  1283               	bcf	3,5	;RP0=0, select bank0
+   479     006E  1303               	bcf	3,6	;RP1=0, select bank0
+   480     006F  1C08               	btfss	8,0	;volatile
+   481     0070  2872               	goto	u471
+   482     0071  2873               	goto	u470
+   483     0072                     u471:
+   484     0072  287B               	goto	l962
+   485     0073                     u470:
+   486     0073                     l51:
+   487     0073  1808               	btfsc	8,0	;volatile
+   488     0074  2876               	goto	u481
+   489     0075  2877               	goto	u480
+   490     0076                     u481:
+   491     0076  2873               	goto	l51
+   492     0077                     u480:
+   493     0077                     l960:
+   494                           
+   495                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 77:                     mod
+      +                          e = 1;
+   496     0077  3001               	movlw	1
+   497     0078  00A3               	movwf	main@mode
+   498     0079  3000               	movlw	0
+   499     007A  00A4               	movwf	main@mode+1
+   500     007B                     l962:
+   501                           
+   502                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 80:             if(PIR1bits
+      +                          .TMR1IF){
+   503     007B  1C0C               	btfss	12,0	;volatile
+   504     007C  287E               	goto	u491
+   505     007D  287F               	goto	u490
+   506     007E                     u491:
+   507     007E  2886               	goto	l54
+   508     007F                     u490:
+   509     007F                     l964:
+   510                           
+   511                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 81:                 PIR1bit
+      +                          s.TMR1IF = 0;
+   512     007F  100C               	bcf	12,0	;volatile
+   513     0080                     l966:
+   514                           
+   515                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 82:                 interru
+      +                          ptCount++;
+   516     0080  3001               	movlw	1
+   517     0081  07B1               	addwf	_interruptCount,f
+   518     0082  1803               	skipnc
+   519     0083  0AB2               	incf	_interruptCount+1,f
+   520     0084  3000               	movlw	0
+   521     0085  07B2               	addwf	_interruptCount+1,f
+   522     0086                     l54:	
+   523                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 83:             }
+   524                           
+   525                           
+   526                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 85:             if(interrup
+      +                          tCount > 9){
+   527     0086  3000               	movlw	0
+   528     0087  0232               	subwf	_interruptCount+1,w
+   529     0088  300A               	movlw	10
+   530     0089  1903               	skipnz
+   531     008A  0231               	subwf	_interruptCount,w
+   532     008B  1C03               	skipc
+   533     008C  288E               	goto	u501
+   534     008D  288F               	goto	u500
+   535     008E                     u501:
+   536     008E  28D0               	goto	l1002
+   537     008F                     u500:
+   538     008F                     l968:
+   539                           
+   540                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 86:                 interru
+      +                          ptCount = 0;
+   541     008F  01B1               	clrf	_interruptCount
+   542     0090  01B2               	clrf	_interruptCount+1
+   543     0091                     l970:
+   544                           
+   545                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 87:                 if(sec 
+      +                          == 59){
+   546     0091  303B               	movlw	59
+   547     0092  0620               	xorwf	main@sec,w
+   548     0093  0421               	iorwf	main@sec+1,w
+   549     0094  1D03               	btfss	3,2
+   550     0095  2897               	goto	u511
+   551     0096  2898               	goto	u510
+   552     0097                     u511:
+   553     0097  28CA               	goto	l1000
+   554     0098                     u510:
+   555     0098                     l972:
+   556                           
+   557                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 88:                     sec
+      +                           = 0;
+   558     0098  01A0               	clrf	main@sec
+   559     0099  01A1               	clrf	main@sec+1
+   560     009A                     l974:
+   561                           
+   562                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 89:                     if(
+      +                          digit[3] == 9){
+   563     009A  3009               	movlw	9
+   564     009B  062A               	xorwf	main@digit+3,w
+   565     009C  1D03               	btfss	3,2
+   566     009D  289F               	goto	u521
+   567     009E  28A0               	goto	u520
+   568     009F                     u521:
+   569     009F  28C7               	goto	l998
+   570     00A0                     u520:
+   571     00A0                     l976:
+   572                           
+   573                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 90:                        
+      +                           digit[3] = 0;
+   574     00A0  01AA               	clrf	main@digit+3
+   575     00A1                     l978:
+   576                           
+   577                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 91:                        
+      +                           if(digit[2] == 5){
+   578     00A1  3005               	movlw	5
+   579     00A2  0629               	xorwf	main@digit+2,w
+   580     00A3  1D03               	btfss	3,2
+   581     00A4  28A6               	goto	u531
+   582     00A5  28A7               	goto	u530
+   583     00A6                     u531:
+   584     00A6  28C4               	goto	l996
+   585     00A7                     u530:
+   586     00A7                     l980:
+   587                           
+   588                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 92:                        
+      +                               digit[2] = 0;
+   589     00A7  01A9               	clrf	main@digit+2
+   590     00A8                     l982:
+   591                           
+   592                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 93:                        
+      +                               if(digit[1] == 9){
+   593     00A8  3009               	movlw	9
+   594     00A9  0628               	xorwf	main@digit+1,w
+   595     00AA  1D03               	btfss	3,2
+   596     00AB  28AD               	goto	u541
+   597     00AC  28AE               	goto	u540
+   598     00AD                     u541:
+   599     00AD  28C1               	goto	l994
+   600     00AE                     u540:
+   601     00AE                     l984:
+   602                           
+   603                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 94:                        
+      +                                   digit[1] = 0;
+   604     00AE  01A8               	clrf	main@digit+1
+   605     00AF                     l986:
+   606                           
+   607                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 95:                        
+      +                                   if((digit[1] == 3)&&(digit[0] == 2)){
+   608     00AF  3003               	movlw	3
+   609     00B0  0628               	xorwf	main@digit+1,w
+   610     00B1  1D03               	btfss	3,2
+   611     00B2  28B4               	goto	u551
+   612     00B3  28B5               	goto	u550
+   613     00B4                     u551:
+   614     00B4  28BE               	goto	l992
+   615     00B5                     u550:
+   616     00B5                     l988:
+   617     00B5  3002               	movlw	2
+   618     00B6  0627               	xorwf	main@digit,w
+   619     00B7  1D03               	btfss	3,2
+   620     00B8  28BA               	goto	u561
+   621     00B9  28BB               	goto	u560
+   622     00BA                     u561:
+   623     00BA  28BE               	goto	l992
+   624     00BB                     u560:
+   625     00BB                     l990:
+   626                           
+   627                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 96:                        
+      +                                       digit[1] = 0;
+   628     00BB  01A8               	clrf	main@digit+1
+   629                           
+   630                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 97:                        
+      +                                       digit[0] = 0;
+   631     00BC  01A7               	clrf	main@digit
+   632                           
+   633                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 98:                        
+      +                                   }
+   634     00BD  28D0               	goto	l1002
+   635     00BE                     l992:
+   636                           
+   637                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 100:                       
+      +                                        digit[0]++;
+   638     00BE  3001               	movlw	1
+   639     00BF  07A7               	addwf	main@digit,f
+   640     00C0  28D0               	goto	l1002
+   641     00C1                     l994:
+   642                           
+   643                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 104:                       
+      +                                    digit[1]++;
+   644     00C1  3001               	movlw	1
+   645     00C2  07A8               	addwf	main@digit+1,f
+   646     00C3  28D0               	goto	l1002
+   647     00C4                     l996:
+   648                           
+   649                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 108:                       
+      +                                digit[2]++;
+   650     00C4  3001               	movlw	1
+   651     00C5  07A9               	addwf	main@digit+2,f
+   652     00C6  28D0               	goto	l1002
+   653     00C7                     l998:
+   654                           
+   655                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 112:                       
+      +                            digit[3]++;
+   656     00C7  3001               	movlw	1
+   657     00C8  07AA               	addwf	main@digit+3,f
+   658     00C9  28D0               	goto	l1002
+   659     00CA                     l1000:
+   660                           
+   661                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 116:                     se
+      +                          c++;
+   662     00CA  3001               	movlw	1
+   663     00CB  07A0               	addwf	main@sec,f
+   664     00CC  1803               	skipnc
+   665     00CD  0AA1               	incf	main@sec+1,f
+   666     00CE  3000               	movlw	0
+   667     00CF  07A1               	addwf	main@sec+1,f
+   668     00D0                     l1002:
+   669                           
+   670                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 120:             for(uint16
+      +                          _t x = 0; x < 4; x++){
+   671     00D0  01A5               	clrf	main@x
+   672     00D1  01A6               	clrf	main@x+1
+   673     00D2                     l1008:
+   674                           
+   675                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 121:                 PORTB 
+      +                          = digit[x];
+   676     00D2  0825               	movf	main@x,w
+   677     00D3  3E27               	addlw	(low (main@digit| 0))& (0+255)
+   678     00D4  0084               	movwf	4
+   679     00D5  1383               	bcf	3,7	;select IRP bank0
+   680     00D6  0800               	movf	0,w
+   681     00D7  0086               	movwf	6	;volatile
+   682     00D8                     l1010:
+   683                           
+   684                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 122:                 showDi
+      +                          git(x + 1);
+   685     00D8  0825               	movf	main@x,w
+   686     00D9  3E01               	addlw	1
+   687     00DA  00F2               	movwf	showDigit@digit
+   688     00DB  0826               	movf	main@x+1,w
+   689     00DC  1803               	skipnc
+   690     00DD  3E01               	addlw	1
+   691     00DE  3E00               	addlw	0
+   692     00DF  00F3               	movwf	showDigit@digit+1
+   693     00E0  120A  118A  2266  120A  118A  	fcall	_showDigit
+   694     00E5                     l1012:
+   695                           
+   696                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 123:             }
+   697     00E5  3001               	movlw	1
+   698     00E6  1283               	bcf	3,5	;RP0=0, select bank0
+   699     00E7  1303               	bcf	3,6	;RP1=0, select bank0
+   700     00E8  07A5               	addwf	main@x,f
+   701     00E9  1803               	skipnc
+   702     00EA  0AA6               	incf	main@x+1,f
+   703     00EB  3000               	movlw	0
+   704     00EC  07A6               	addwf	main@x+1,f
+   705     00ED                     l1014:
+   706     00ED  3000               	movlw	0
+   707     00EE  0226               	subwf	main@x+1,w
+   708     00EF  3004               	movlw	4
+   709     00F0  1903               	skipnz
+   710     00F1  0225               	subwf	main@x,w
+   711     00F2  1C03               	skipc
+   712     00F3  28F5               	goto	u571
+   713     00F4  28F6               	goto	u570
+   714     00F5                     u571:
+   715     00F5  28D2               	goto	l1008
+   716     00F6                     u570:
+   717     00F6                     l1016:
+   718                           
+   719                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 72:         while(mode == 0
+      +                          ){
+   720     00F6  1283               	bcf	3,5	;RP0=0, select bank0
+   721     00F7  0823               	movf	main@mode,w
+   722     00F8  0424               	iorwf	main@mode+1,w
+   723     00F9  1903               	btfsc	3,2
+   724     00FA  28FC               	goto	u581
+   725     00FB  28FD               	goto	u580
+   726     00FC                     u581:
+   727     00FC  2860               	goto	l48
+   728     00FD                     u580:
+   729     00FD                     l68:
+   730                           
+   731                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 126:         PIE1bits.CCP1I
+      +                          E = 0;
+   732     00FD  1683               	bsf	3,5	;RP0=1, select bank1
+   733     00FE  1303               	bcf	3,6	;RP1=0, select bank1
+   734     00FF  110C               	bcf	12,2	;volatile
+   735     0100                     l1018:
+   736                           
+   737                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 127:         interruptCount
+      +                           = 0, selectedDigitNo = 1;
+   738     0100  1283               	bcf	3,5	;RP0=0, select bank0
+   739     0101  1303               	bcf	3,6	;RP1=0, select bank0
+   740     0102  01B1               	clrf	_interruptCount
+   741     0103  01B2               	clrf	_interruptCount+1
+   742     0104                     l1020:
+   743     0104  3001               	movlw	1
+   744     0105  00AB               	movwf	main@selectedDigitNo
+   745     0106  3000               	movlw	0
+   746     0107  00AC               	movwf	main@selectedDigitNo+1
+   747                           
+   748                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 129:         while(mode == 
+      +                          1){
+   749     0108  2997               	goto	l1062
+   750     0109                     l70:
+   751                           
+   752                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 130:             if(PORTDbi
+      +                          ts.RD0){
+   753     0109  1C08               	btfss	8,0	;volatile
+   754     010A  290C               	goto	u591
+   755     010B  290D               	goto	u590
+   756     010C                     u591:
+   757     010C  2924               	goto	l1030
+   758     010D                     u590:
+   759     010D                     l1022:
+   760                           
+   761                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 131:                 _delay
+      +                          ((unsigned long)((10)*(20000000/4000.0)));
+   762     010D  3041               	movlw	65
+   763     010E  00F6               	movwf	??_main+1
+   764     010F  30EE               	movlw	238
+   765     0110  00F5               	movwf	??_main
+   766     0111                     u857:
+   767     0111  0BF5               	decfsz	??_main,f
+   768     0112  2911               	goto	u857
+   769     0113  0BF6               	decfsz	??_main+1,f
+   770     0114  2911               	goto	u857
+   771     0115  0000               	nop
+   772     0116                     l1024:
+   773                           
+   774                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 132:                 if(POR
+      +                          TDbits.RD0){
+   775     0116  1283               	bcf	3,5	;RP0=0, select bank0
+   776     0117  1303               	bcf	3,6	;RP1=0, select bank0
+   777     0118  1C08               	btfss	8,0	;volatile
+   778     0119  291B               	goto	u601
+   779     011A  291C               	goto	u600
+   780     011B                     u601:
+   781     011B  2924               	goto	l1030
+   782     011C                     u600:
+   783     011C                     l73:
+   784     011C  1808               	btfsc	8,0	;volatile
+   785     011D  291F               	goto	u611
+   786     011E  2920               	goto	u610
+   787     011F                     u611:
+   788     011F  291C               	goto	l73
+   789     0120                     u610:
+   790     0120                     l1028:
+   791                           
+   792                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 134:                     mo
+      +                          de = 2;
+   793     0120  3002               	movlw	2
+   794     0121  00A3               	movwf	main@mode
+   795     0122  3000               	movlw	0
+   796     0123  00A4               	movwf	main@mode+1
+   797     0124                     l1030:
+   798                           
+   799                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 137:             if(PORTDbi
+      +                          ts.RD1){
+   800     0124  1C88               	btfss	8,1	;volatile
+   801     0125  2927               	goto	u621
+   802     0126  2928               	goto	u620
+   803     0127                     u621:
+   804     0127  2941               	goto	l76
+   805     0128                     u620:
+   806     0128                     l1032:
+   807                           
+   808                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 138:                 _delay
+      +                          ((unsigned long)((10)*(20000000/4000.0)));
+   809     0128  3041               	movlw	65
+   810     0129  00F6               	movwf	??_main+1
+   811     012A  30EE               	movlw	238
+   812     012B  00F5               	movwf	??_main
+   813     012C                     u867:
+   814     012C  0BF5               	decfsz	??_main,f
+   815     012D  292C               	goto	u867
+   816     012E  0BF6               	decfsz	??_main+1,f
+   817     012F  292C               	goto	u867
+   818     0130  0000               	nop
+   819     0131                     l1034:
+   820                           
+   821                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 139:                 if(POR
+      +                          TDbits.RD1){
+   822     0131  1283               	bcf	3,5	;RP0=0, select bank0
+   823     0132  1303               	bcf	3,6	;RP1=0, select bank0
+   824     0133  1C88               	btfss	8,1	;volatile
+   825     0134  2936               	goto	u631
+   826     0135  2937               	goto	u630
+   827     0136                     u631:
+   828     0136  2941               	goto	l76
+   829     0137                     u630:
+   830     0137                     l1036:
+   831                           
+   832                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 140:                     se
+      +                          lectedDigitNo++;
+   833     0137  3001               	movlw	1
+   834     0138  07AB               	addwf	main@selectedDigitNo,f
+   835     0139  1803               	skipnc
+   836     013A  0AAC               	incf	main@selectedDigitNo+1,f
+   837     013B  3000               	movlw	0
+   838     013C  07AC               	addwf	main@selectedDigitNo+1,f
+   839     013D                     l78:	
+   840                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 141:                     wh
+      +                          ile(PORTDbits.RD1);
+   841                           
+   842     013D  1888               	btfsc	8,1	;volatile
+   843     013E  2940               	goto	u641
+   844     013F  2941               	goto	u640
+   845     0140                     u641:
+   846     0140  293D               	goto	l78
+   847     0141                     u640:
+   848     0141                     l76:	
+   849                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 143:             }
+   850                           
+   851                           
+   852                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 144:             if(PORTDbi
+      +                          ts.RD2){
+   853     0141  1D08               	btfss	8,2	;volatile
+   854     0142  2944               	goto	u651
+   855     0143  2945               	goto	u650
+   856     0144                     u651:
+   857     0144  2975               	goto	l1058
+   858     0145                     u650:
+   859     0145                     l1038:
+   860                           
+   861                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 145:                 _delay
+      +                          ((unsigned long)((10)*(20000000/4000.0)));
+   862     0145  3041               	movlw	65
+   863     0146  00F6               	movwf	??_main+1
+   864     0147  30EE               	movlw	238
+   865     0148  00F5               	movwf	??_main
+   866     0149                     u877:
+   867     0149  0BF5               	decfsz	??_main,f
+   868     014A  2949               	goto	u877
+   869     014B  0BF6               	decfsz	??_main+1,f
+   870     014C  2949               	goto	u877
+   871     014D  0000               	nop
+   872     014E                     l1040:
+   873                           
+   874                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 146:                 if(POR
+      +                          TDbits.RD2){
+   875     014E  1283               	bcf	3,5	;RP0=0, select bank0
+   876     014F  1303               	bcf	3,6	;RP1=0, select bank0
+   877     0150  1D08               	btfss	8,2	;volatile
+   878     0151  2953               	goto	u661
+   879     0152  2954               	goto	u660
+   880     0153                     u661:
+   881     0153  2975               	goto	l1058
+   882     0154                     u660:
+   883     0154                     l1042:
+   884                           
+   885                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 147:                     se
+      +                          lectedDigitNo--;
+   886     0154  3001               	movlw	1
+   887     0155  02AB               	subwf	main@selectedDigitNo,f
+   888     0156  3000               	movlw	0
+   889     0157  1C03               	skipc
+   890     0158  03AC               	decf	main@selectedDigitNo+1,f
+   891     0159  02AC               	subwf	main@selectedDigitNo+1,f
+   892     015A                     l83:	
+   893                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 148:                     wh
+      +                          ile(PORTDbits.RD2);
+   894                           
+   895     015A  1908               	btfsc	8,2	;volatile
+   896     015B  295D               	goto	u671
+   897     015C  295E               	goto	u670
+   898     015D                     u671:
+   899     015D  295A               	goto	l83
+   900     015E                     u670:
+   901     015E  2975               	goto	l1058
+   902     015F                     l1044:
+   903     015F  3004               	movlw	4
+   904     0160  00AB               	movwf	main@selectedDigitNo
+   905     0161  3000               	movlw	0
+   906     0162  00AC               	movwf	main@selectedDigitNo+1
+   907     0163  298E               	goto	l1060
+   908     0164                     l1046:
+   909     0164  0827               	movf	main@digit,w
+   910     0165  0086               	movwf	6	;volatile
+   911     0166  298E               	goto	l1060
+   912     0167                     l1048:
+   913     0167  0828               	movf	main@digit+1,w
+   914     0168  0086               	movwf	6	;volatile
+   915     0169  298E               	goto	l1060
+   916     016A                     l1050:
+   917     016A  0829               	movf	main@digit+2,w
+   918     016B  0086               	movwf	6	;volatile
+   919     016C  298E               	goto	l1060
+   920     016D                     l1052:
+   921     016D  082A               	movf	main@digit+3,w
+   922     016E  0086               	movwf	6	;volatile
+   923     016F  298E               	goto	l1060
+   924     0170                     l1054:
+   925     0170  3001               	movlw	1
+   926     0171  00AB               	movwf	main@selectedDigitNo
+   927     0172  3000               	movlw	0
+   928     0173  00AC               	movwf	main@selectedDigitNo+1
+   929     0174  298E               	goto	l1060
+   930     0175                     l1058:
+   931                           
+   932                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
+      +                          itches
+   933                           ; Switch size 1, requested type "simple"
+   934                           ; Number of cases is 1, Range of values is 0 to 0
+   935                           ; switch strategies available:
+   936                           ; Name         Instructions Cycles
+   937                           ; simple_byte            4     3 (average)
+   938                           ; direct_byte           11     8 (fixed)
+   939                           ; jumptable            260     6 (fixed)
+   940                           ;	Chosen strategy is simple_byte
+   941     0175  082C               	movf	main@selectedDigitNo+1,w
+   942     0176  3A00               	xorlw	0	; case 0
+   943     0177  1903               	skipnz
+   944     0178  297A               	goto	l1190
+   945     0179  298E               	goto	l1060
+   946     017A                     l1190:
+   947                           
+   948                           ; Switch size 1, requested type "simple"
+   949                           ; Number of cases is 6, Range of values is 0 to 5
+   950                           ; switch strategies available:
+   951                           ; Name         Instructions Cycles
+   952                           ; simple_byte           19    10 (average)
+   953                           ; direct_byte           26     8 (fixed)
+   954                           ; jumptable            260     6 (fixed)
+   955                           ;	Chosen strategy is simple_byte
+   956     017A  082B               	movf	main@selectedDigitNo,w
+   957     017B  3A00               	xorlw	0	; case 0
+   958     017C  1903               	skipnz
+   959     017D  295F               	goto	l1044
+   960     017E  3A01               	xorlw	1	; case 1
+   961     017F  1903               	skipnz
+   962     0180  2964               	goto	l1046
+   963     0181  3A03               	xorlw	3	; case 2
+   964     0182  1903               	skipnz
+   965     0183  2967               	goto	l1048
+   966     0184  3A01               	xorlw	1	; case 3
+   967     0185  1903               	skipnz
+   968     0186  296A               	goto	l1050
+   969     0187  3A07               	xorlw	7	; case 4
+   970     0188  1903               	skipnz
+   971     0189  296D               	goto	l1052
+   972     018A  3A01               	xorlw	1	; case 5
+   973     018B  1903               	skipnz
+   974     018C  2970               	goto	l1054
+   975     018D  298E               	goto	l1060
+   976     018E                     l1060:
+   977                           
+   978                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 160:             showDigit(
+      +                          selectedDigitNo);
+   979     018E  082C               	movf	main@selectedDigitNo+1,w
+   980     018F  00F3               	movwf	showDigit@digit+1
+   981     0190  082B               	movf	main@selectedDigitNo,w
+   982     0191  00F2               	movwf	showDigit@digit
+   983     0192  120A  118A  2266  120A  118A  	fcall	_showDigit
+   984     0197                     l1062:
+   985                           
+   986                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 129:         while(mode == 
+      +                          1){
+   987     0197  1283               	bcf	3,5	;RP0=0, select bank0
+   988     0198  1303               	bcf	3,6	;RP1=0, select bank0
+   989     0199  0323               	decf	main@mode,w
+   990     019A  0424               	iorwf	main@mode+1,w
+   991     019B  1903               	btfsc	3,2
+   992     019C  299E               	goto	u681
+   993     019D  299F               	goto	u680
+   994     019E                     u681:
+   995     019E  2909               	goto	l70
+   996     019F                     u680:
+   997     019F                     l94:
+   998                           
+   999                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 163:         uint8_t digitM
+      +                          axVal = 9;
+  1000     019F  3009               	movlw	9
+  1001     01A0  00A2               	movwf	main@digitMaxVal
+  1002                           
+  1003                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 164:         switch(selecte
+      +                          dDigitNo){
+  1004     01A1  29AE               	goto	l1070
+  1005     01A2                     l96:	
+  1006                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 165:             case 1: di
+      +                          gitMaxVal = 2; break;
+  1007                           
+  1008     01A2  3002               	movlw	2
+  1009     01A3  00A2               	movwf	main@digitMaxVal
+  1010     01A4  29BB               	goto	l1072
+  1011     01A5                     l1064:
+  1012     01A5  3002               	movlw	2
+  1013     01A6  0627               	xorwf	main@digit,w
+  1014     01A7  1D03               	btfss	3,2
+  1015     01A8  29AA               	goto	u691
+  1016     01A9  29AB               	goto	u690
+  1017     01AA                     u691:
+  1018     01AA  29BB               	goto	l1072
+  1019     01AB                     u690:
+  1020     01AB                     l1066:
+  1021     01AB  3004               	movlw	4
+  1022     01AC  00A2               	movwf	main@digitMaxVal
+  1023     01AD  29BB               	goto	l1072
+  1024     01AE                     l1070:
+  1025                           
+  1026                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
+      +                          itches
+  1027                           ; Switch size 1, requested type "simple"
+  1028                           ; Number of cases is 1, Range of values is 0 to 0
+  1029                           ; switch strategies available:
+  1030                           ; Name         Instructions Cycles
+  1031                           ; simple_byte            4     3 (average)
+  1032                           ; direct_byte           11     8 (fixed)
+  1033                           ; jumptable            260     6 (fixed)
+  1034                           ;	Chosen strategy is simple_byte
+  1035     01AE  082C               	movf	main@selectedDigitNo+1,w
+  1036     01AF  3A00               	xorlw	0	; case 0
+  1037     01B0  1903               	skipnz
+  1038     01B1  29B3               	goto	l1192
+  1039     01B2  29BB               	goto	l1072
+  1040     01B3                     l1192:
+  1041                           
+  1042                           ; Switch size 1, requested type "simple"
+  1043                           ; Number of cases is 2, Range of values is 1 to 2
+  1044                           ; switch strategies available:
+  1045                           ; Name         Instructions Cycles
+  1046                           ; simple_byte            7     4 (average)
+  1047                           ; direct_byte           17    11 (fixed)
+  1048                           ; jumptable            263     9 (fixed)
+  1049                           ;	Chosen strategy is simple_byte
+  1050     01B3  082B               	movf	main@selectedDigitNo,w
+  1051     01B4  3A01               	xorlw	1	; case 1
+  1052     01B5  1903               	skipnz
+  1053     01B6  29A2               	goto	l96
+  1054     01B7  3A03               	xorlw	3	; case 2
+  1055     01B8  1903               	skipnz
+  1056     01B9  29A5               	goto	l1064
+  1057     01BA  29BB               	goto	l1072
+  1058     01BB                     l1072:
+  1059                           
+  1060                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 168:         showDigit(0);
+  1061     01BB  3000               	movlw	0
+  1062     01BC  00F2               	movwf	showDigit@digit
+  1063     01BD  00F3               	movwf	showDigit@digit+1
+  1064     01BE  120A  118A  2266  120A  118A  	fcall	_showDigit
+  1065     01C3                     l1074:
+  1066                           
+  1067                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 169:         _delay((unsign
+      +                          ed long)((500)*(20000000/4000.0)));
+  1068     01C3  300D               	movlw	13
+  1069     01C4  00F7               	movwf	??_main+2
+  1070     01C5  30AF               	movlw	175
+  1071     01C6  00F6               	movwf	??_main+1
+  1072     01C7  30B6               	movlw	182
+  1073     01C8  00F5               	movwf	??_main
+  1074     01C9                     u887:
+  1075     01C9  0BF5               	decfsz	??_main,f
+  1076     01CA  29C9               	goto	u887
+  1077     01CB  0BF6               	decfsz	??_main+1,f
+  1078     01CC  29C9               	goto	u887
+  1079     01CD  0BF7               	decfsz	??_main+2,f
+  1080     01CE  29C9               	goto	u887
+  1081     01CF  0000               	nop
+  1082                           
+  1083                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 171:         while(mode == 
+      +                          2){
+  1084     01D0  2A56               	goto	l1110
+  1085     01D1                     l101:
+  1086                           
+  1087                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 172:             if(PORTDbi
+      +                          ts.RD0){
+  1088     01D1  1C08               	btfss	8,0	;volatile
+  1089     01D2  29D4               	goto	u701
+  1090     01D3  29D5               	goto	u700
+  1091     01D4                     u701:
+  1092     01D4  29EA               	goto	l1084
+  1093     01D5                     u700:
+  1094     01D5                     l1076:
+  1095                           
+  1096                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 173:                 _delay
+      +                          ((unsigned long)((10)*(20000000/4000.0)));
+  1097     01D5  3041               	movlw	65
+  1098     01D6  00F6               	movwf	??_main+1
+  1099     01D7  30EE               	movlw	238
+  1100     01D8  00F5               	movwf	??_main
+  1101     01D9                     u897:
+  1102     01D9  0BF5               	decfsz	??_main,f
+  1103     01DA  29D9               	goto	u897
+  1104     01DB  0BF6               	decfsz	??_main+1,f
+  1105     01DC  29D9               	goto	u897
+  1106     01DD  0000               	nop
+  1107     01DE                     l1078:
+  1108                           
+  1109                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 174:                 if(POR
+      +                          TDbits.RD0){
+  1110     01DE  1283               	bcf	3,5	;RP0=0, select bank0
+  1111     01DF  1303               	bcf	3,6	;RP1=0, select bank0
+  1112     01E0  1C08               	btfss	8,0	;volatile
+  1113     01E1  29E3               	goto	u711
+  1114     01E2  29E4               	goto	u710
+  1115     01E3                     u711:
+  1116     01E3  29EA               	goto	l1084
+  1117     01E4                     u710:
+  1118     01E4                     l104:
+  1119     01E4  1808               	btfsc	8,0	;volatile
+  1120     01E5  29E7               	goto	u721
+  1121     01E6  29E8               	goto	u720
+  1122     01E7                     u721:
+  1123     01E7  29E4               	goto	l104
+  1124     01E8                     u720:
+  1125     01E8                     l1082:
+  1126                           
+  1127                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 176:                     mo
+      +                          de = 0;
+  1128     01E8  01A3               	clrf	main@mode
+  1129     01E9  01A4               	clrf	main@mode+1
+  1130     01EA                     l1084:
+  1131                           
+  1132                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 179:             if(PORTDbi
+      +                          ts.RD1){
+  1133     01EA  1C88               	btfss	8,1	;volatile
+  1134     01EB  29ED               	goto	u731
+  1135     01EC  29EE               	goto	u730
+  1136     01ED                     u731:
+  1137     01ED  2A18               	goto	l107
+  1138     01EE                     u730:
+  1139     01EE                     l1086:
+  1140                           
+  1141                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 180:                 _delay
+      +                          ((unsigned long)((10)*(20000000/4000.0)));
+  1142     01EE  3041               	movlw	65
+  1143     01EF  00F6               	movwf	??_main+1
+  1144     01F0  30EE               	movlw	238
+  1145     01F1  00F5               	movwf	??_main
+  1146     01F2                     u907:
+  1147     01F2  0BF5               	decfsz	??_main,f
+  1148     01F3  29F2               	goto	u907
+  1149     01F4  0BF6               	decfsz	??_main+1,f
+  1150     01F5  29F2               	goto	u907
+  1151     01F6  0000               	nop
+  1152     01F7                     l1088:
+  1153                           
+  1154                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 181:                 if(POR
+      +                          TDbits.RD1){
+  1155     01F7  1283               	bcf	3,5	;RP0=0, select bank0
+  1156     01F8  1303               	bcf	3,6	;RP1=0, select bank0
+  1157     01F9  1C88               	btfss	8,1	;volatile
+  1158     01FA  29FC               	goto	u741
+  1159     01FB  29FD               	goto	u740
+  1160     01FC                     u741:
+  1161     01FC  2A18               	goto	l107
+  1162     01FD                     u740:
+  1163     01FD                     l1090:
+  1164                           
+  1165                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 182:                     if
+      +                          (digit[selectedDigitNo - 1] == digitMaxVal){
+  1166     01FD  082B               	movf	main@selectedDigitNo,w
+  1167     01FE  3EFF               	addlw	255
+  1168     01FF  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1169     0200  0084               	movwf	4
+  1170     0201  1383               	bcf	3,7	;select IRP bank0
+  1171     0202  0800               	movf	0,w
+  1172     0203  0622               	xorwf	main@digitMaxVal,w
+  1173     0204  1D03               	skipz
+  1174     0205  2A07               	goto	u751
+  1175     0206  2A08               	goto	u750
+  1176     0207                     u751:
+  1177     0207  2A0E               	goto	l1094
+  1178     0208                     u750:
+  1179     0208                     l1092:
+  1180                           
+  1181                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 183:                       
+      +                            digit[selectedDigitNo - 1] = 0;
+  1182     0208  082B               	movf	main@selectedDigitNo,w
+  1183     0209  3EFF               	addlw	255
+  1184     020A  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1185     020B  0084               	movwf	4
+  1186     020C  0180               	clrf	0
+  1187                           
+  1188                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 184:                     }
+  1189     020D  2A14               	goto	l111
+  1190     020E                     l1094:
+  1191                           
+  1192                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 186:                       
+      +                            (digit[selectedDigitNo - 1])++;
+  1193     020E  082B               	movf	main@selectedDigitNo,w
+  1194     020F  3EFF               	addlw	255
+  1195     0210  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1196     0211  0084               	movwf	4
+  1197     0212  3001               	movlw	1
+  1198     0213  0780               	addwf	0,f
+  1199     0214                     l111:
+  1200     0214  1888               	btfsc	8,1	;volatile
+  1201     0215  2A17               	goto	u761
+  1202     0216  2A18               	goto	u760
+  1203     0217                     u761:
+  1204     0217  2A14               	goto	l111
+  1205     0218                     u760:
+  1206     0218                     l107:	
+  1207                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 190:             }
+  1208                           
+  1209                           
+  1210                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 191:             if(PORTDbi
+      +                          ts.RD2){
+  1211     0218  1D08               	btfss	8,2	;volatile
+  1212     0219  2A1B               	goto	u771
+  1213     021A  2A1C               	goto	u770
+  1214     021B                     u771:
+  1215     021B  2A46               	goto	l1106
+  1216     021C                     u770:
+  1217     021C                     l1096:
+  1218                           
+  1219                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 192:                 _delay
+      +                          ((unsigned long)((10)*(20000000/4000.0)));
+  1220     021C  3041               	movlw	65
+  1221     021D  00F6               	movwf	??_main+1
+  1222     021E  30EE               	movlw	238
+  1223     021F  00F5               	movwf	??_main
+  1224     0220                     u917:
+  1225     0220  0BF5               	decfsz	??_main,f
+  1226     0221  2A20               	goto	u917
+  1227     0222  0BF6               	decfsz	??_main+1,f
+  1228     0223  2A20               	goto	u917
+  1229     0224  0000               	nop
+  1230     0225                     l1098:
+  1231                           
+  1232                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 193:                 if(POR
+      +                          TDbits.RD2){
+  1233     0225  1283               	bcf	3,5	;RP0=0, select bank0
+  1234     0226  1303               	bcf	3,6	;RP1=0, select bank0
+  1235     0227  1D08               	btfss	8,2	;volatile
+  1236     0228  2A2A               	goto	u781
+  1237     0229  2A2B               	goto	u780
+  1238     022A                     u781:
+  1239     022A  2A46               	goto	l1106
+  1240     022B                     u780:
+  1241     022B                     l1100:
+  1242                           
+  1243                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 194:                     if
+      +                          (digit[selectedDigitNo - 1] == 0){
+  1244     022B  082B               	movf	main@selectedDigitNo,w
+  1245     022C  3EFF               	addlw	255
+  1246     022D  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1247     022E  0084               	movwf	4
+  1248     022F  1383               	bcf	3,7	;select IRP bank0
+  1249     0230  0800               	movf	0,w
+  1250     0231  1D03               	btfss	3,2
+  1251     0232  2A34               	goto	u791
+  1252     0233  2A35               	goto	u790
+  1253     0234                     u791:
+  1254     0234  2A3C               	goto	l1104
+  1255     0235                     u790:
+  1256     0235                     l1102:
+  1257                           
+  1258                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 195:                       
+      +                            digit[selectedDigitNo - 1] = digitMaxVal;
+  1259     0235  082B               	movf	main@selectedDigitNo,w
+  1260     0236  3EFF               	addlw	255
+  1261     0237  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1262     0238  0084               	movwf	4
+  1263     0239  0822               	movf	main@digitMaxVal,w
+  1264     023A  0080               	movwf	0
+  1265                           
+  1266                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 196:                     }
+  1267     023B  2A42               	goto	l118
+  1268     023C                     l1104:
+  1269                           
+  1270                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 198:                       
+      +                            (digit[selectedDigitNo - 1])--;
+  1271     023C  082B               	movf	main@selectedDigitNo,w
+  1272     023D  3EFF               	addlw	255
+  1273     023E  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1274     023F  0084               	movwf	4
+  1275     0240  3001               	movlw	1
+  1276     0241  0280               	subwf	0,f
+  1277     0242                     l118:
+  1278     0242  1908               	btfsc	8,2	;volatile
+  1279     0243  2A45               	goto	u801
+  1280     0244  2A46               	goto	u800
+  1281     0245                     u801:
+  1282     0245  2A42               	goto	l118
+  1283     0246                     u800:
+  1284     0246                     l1106:
+  1285                           
+  1286                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 204:             PORTB = di
+      +                          git[selectedDigitNo - 1];
+  1287     0246  082B               	movf	main@selectedDigitNo,w
+  1288     0247  3EFF               	addlw	255
+  1289     0248  3E27               	addlw	(low (main@digit| 0))& (0+255)
+  1290     0249  0084               	movwf	4
+  1291     024A  1383               	bcf	3,7	;select IRP bank0
+  1292     024B  0800               	movf	0,w
+  1293     024C  0086               	movwf	6	;volatile
+  1294     024D                     l1108:
+  1295                           
+  1296                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 205:             showDigit(
+      +                          selectedDigitNo);
+  1297     024D  082C               	movf	main@selectedDigitNo+1,w
+  1298     024E  00F3               	movwf	showDigit@digit+1
+  1299     024F  082B               	movf	main@selectedDigitNo,w
+  1300     0250  00F2               	movwf	showDigit@digit
+  1301     0251  120A  118A  2266  120A  118A  	fcall	_showDigit
+  1302     0256                     l1110:
+  1303                           
+  1304                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 171:         while(mode == 
+      +                          2){
+  1305     0256  3002               	movlw	2
+  1306     0257  1283               	bcf	3,5	;RP0=0, select bank0
+  1307     0258  1303               	bcf	3,6	;RP1=0, select bank0
+  1308     0259  0623               	xorwf	main@mode,w
+  1309     025A  0424               	iorwf	main@mode+1,w
+  1310     025B  1903               	btfsc	3,2
+  1311     025C  2A5E               	goto	u811
+  1312     025D  2A5F               	goto	u810
+  1313     025E                     u811:
+  1314     025E  29D1               	goto	l101
+  1315     025F                     u810:
+  1316     025F                     l121:
+  1317                           
+  1318                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 208:         PIE1bits.CCP1I
+      +                          E = 1;
+  1319     025F  1683               	bsf	3,5	;RP0=1, select bank1
+  1320     0260  1303               	bcf	3,6	;RP1=0, select bank1
+  1321     0261  150C               	bsf	12,2	;volatile
+  1322     0262  28F6               	goto	l1016
+  1323     0263  120A  118A  280C   	ljmp	start
+  1324     0266                     __end_of_main:
+  1325                           
+  1326                           	psect	text1
+  1327     0266                     __ptext1:	
+  1328 ;; *************** function _showDigit *****************
+  1329 ;; Defined at:
+  1330 ;;		line 30 in file "C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c"
+  1331 ;; Parameters:    Size  Location     Type
+  1332 ;;  digit           2    2[COMMON] unsigned short 
+  1333 ;; Auto vars:     Size  Location     Type
+  1334 ;;		None
+  1335 ;; Return value:  Size  Location     Type
+  1336 ;;                  1    wreg      void 
+  1337 ;; Registers used:
+  1338 ;;		wreg, status,2, status,0
+  1339 ;; Tracked objects:
+  1340 ;;		On entry : 0/0
+  1341 ;;		On exit  : 0/0
+  1342 ;;		Unchanged: 0/0
+  1343 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1344 ;;      Params:         2       0       0       0       0
+  1345 ;;      Locals:         0       0       0       0       0
+  1346 ;;      Temps:          1       0       0       0       0
+  1347 ;;      Totals:         3       0       0       0       0
+  1348 ;;Total ram usage:        3 bytes
+  1349 ;; Hardware stack levels used: 1
+  1350 ;; Hardware stack levels required when called: 1
+  1351 ;; This function calls:
+  1352 ;;		Nothing
+  1353 ;; This function is called by:
+  1354 ;;		_main
+  1355 ;; This function uses a non-reentrant model
+  1356 ;;
+  1357                           
+  1358     0266                     _showDigit:	
+  1359                           ;psect for function _showDigit
+  1360                           
+  1361     0266                     l932:	
+  1362                           ;incstack = 0
+  1363                           ; Regs used in _showDigit: [wreg+status,2+status,0]
+  1364                           
+  1365                           
+  1366                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 31:     PORTB &= 0x0F;
+  1367     0266  300F               	movlw	15
+  1368     0267  1283               	bcf	3,5	;RP0=0, select bank0
+  1369     0268  1303               	bcf	3,6	;RP1=0, select bank0
+  1370     0269  0586               	andwf	6,f	;volatile
+  1371                           
+  1372                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 32:     if(digit > 0){
+  1373     026A  0872               	movf	showDigit@digit,w
+  1374     026B  0473               	iorwf	showDigit@digit+1,w
+  1375     026C  1903               	btfsc	3,2
+  1376     026D  2A6F               	goto	u421
+  1377     026E  2A70               	goto	u420
+  1378     026F                     u421:
+  1379     026F  2A7D               	goto	l34
+  1380     0270                     u420:
+  1381     0270                     l934:
+  1382                           
+  1383                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 33:         PORTB |= 0x10 <
+      +                          < (digit - 1);
+  1384     0270  3010               	movlw	16
+  1385     0271  00F4               	movwf	??_showDigit
+  1386     0272  0872               	movf	showDigit@digit,w
+  1387     0273  3EFF               	addlw	255
+  1388     0274  3E01               	addlw	1
+  1389     0275  2A78               	goto	u434
+  1390     0276                     u435:
+  1391     0276  1003               	clrc
+  1392     0277  0DF4               	rlf	??_showDigit,f
+  1393     0278                     u434:
+  1394     0278  3EFF               	addlw	-1
+  1395     0279  1D03               	skipz
+  1396     027A  2A76               	goto	u435
+  1397     027B  0874               	movf	??_showDigit,w
+  1398     027C  0486               	iorwf	6,f	;volatile
+  1399     027D                     l34:
+  1400     027D  0008               	return
+  1401     027E                     __end_of_showDigit:
+  1402                           
+  1403                           	psect	text2
+  1404     027E                     __ptext2:	
+  1405 ;; *************** function _ISR *****************
+  1406 ;; Defined at:
+  1407 ;;		line 212 in file "C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c"
+  1408 ;; Parameters:    Size  Location     Type
+  1409 ;;		None
+  1410 ;; Auto vars:     Size  Location     Type
+  1411 ;;		None
+  1412 ;; Return value:  Size  Location     Type
+  1413 ;;                  1    wreg      void 
+  1414 ;; Registers used:
+  1415 ;;		wreg
+  1416 ;; Tracked objects:
+  1417 ;;		On entry : 0/0
+  1418 ;;		On exit  : 0/0
+  1419 ;;		Unchanged: 0/0
+  1420 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1421 ;;      Params:         0       0       0       0       0
+  1422 ;;      Locals:         0       0       0       0       0
+  1423 ;;      Temps:          2       0       0       0       0
+  1424 ;;      Totals:         2       0       0       0       0
+  1425 ;;Total ram usage:        2 bytes
+  1426 ;; Hardware stack levels used: 1
+  1427 ;; This function calls:
+  1428 ;;		Nothing
+  1429 ;; This function is called by:
+  1430 ;;		Interrupt level 1
+  1431 ;; This function uses a non-reentrant model
+  1432 ;;
+  1433                           
+  1434     027E                     _ISR:	
+  1435                           ;psect for function _ISR
+  1436                           
+  1437     027E                     i1l1124:
+  1438                           
+  1439                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 213:     if(PIR1bits.CCP1IF
+      +                          ){
+  1440     027E  1283               	bcf	3,5	;RP0=0, select bank0
+  1441     027F  1303               	bcf	3,6	;RP1=0, select bank0
+  1442     0280  1D0C               	btfss	12,2	;volatile
+  1443     0281  2A83               	goto	u82_21
+  1444     0282  2A84               	goto	u82_20
+  1445     0283                     u82_21:
+  1446     0283  2A8B               	goto	i1l130
+  1447     0284                     u82_20:
+  1448     0284                     i1l1126:
+  1449                           
+  1450                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 214:         PIR1bits.CCP1I
+      +                          F = 0;
+  1451     0284  110C               	bcf	12,2	;volatile
+  1452     0285                     i1l1128:
+  1453                           
+  1454                           ;C:\Users\mehna\Documents\MPlab projects\PIC Clock.X\main.c: 215:         interruptCount
+      +                          ++;
+  1455     0285  3001               	movlw	1
+  1456     0286  07B1               	addwf	_interruptCount,f
+  1457     0287  1803               	skipnc
+  1458     0288  0AB2               	incf	_interruptCount+1,f
+  1459     0289  3000               	movlw	0
+  1460     028A  07B2               	addwf	_interruptCount+1,f
+  1461     028B                     i1l130:
+  1462     028B  0871               	movf	??_ISR+1,w
+  1463     028C  008A               	movwf	10
+  1464     028D  0E70               	swapf	??_ISR,w
+  1465     028E  0083               	movwf	3
+  1466     028F  0EFE               	swapf	btemp,f
+  1467     0290  0E7E               	swapf	btemp,w
+  1468     0291  0009               	retfie
+  1469     0292                     __end_of_ISR:
+  1470     0002                     ___latbits      equ	2
+  1471     007E                     btemp           set	126	;btemp
+  1472     007E                     wtemp0          set	126
+  1473                           
+  1474                           	psect	intentry
+  1475     0004                     __pintentry:	
+  1476                           ;incstack = 0
+  1477                           ; Regs used in _ISR: [wreg]
+  1478                           
+  1479     0004                     interrupt_function:
+  1480     007E                     saved_w         set	btemp
+  1481     0004  00FE               	movwf	btemp
+  1482     0005  0E03               	swapf	3,w
+  1483     0006  00F0               	movwf	??_ISR
+  1484     0007  080A               	movf	10,w
+  1485     0008  00F1               	movwf	??_ISR+1
+  1486     0009  120A  118A  2A7E   	ljmp	_ISR
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         6
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14      8       8
+    BANK0            80     13      19
+    BANK1            80      0       0
+    BANK3            96      0       0
+    BANK2            96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    _main->_showDigit
+
+Critical Paths under _ISR in COMMON
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _ISR in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _ISR in BANK1
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _ISR in BANK3
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _ISR in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                16    16      0    1113
+                                              5 COMMON     3     3      0
+                                              0 BANK0     13    13      0
+                          _showDigit
+ ---------------------------------------------------------------------------------
+ (1) _showDigit                                            3     1      2      48
+                                              2 COMMON     3     1      2
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (2) _ISR                                                  2     2      0       0
+                                              0 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _showDigit
+
+ _ISR (ROOT)
+
+Address spaces:
+Name               Size   Autos  Total    Usage
+BITCOMMON           14      0       0      0.0%
+BITBANK0            80      0       0      0.0%
+BITBANK1            80      0       0      0.0%
+BITBANK3            96      0       0      0.0%
+BITBANK2            96      0       0      0.0%
+COMMON              14      8       8     57.1%
+BANK0               80     13      19     23.8%
+BANK1               80      0       0      0.0%
+BANK3               96      0       0      0.0%
+BANK2               96      0       0      0.0%
+STACK                0      0       0      0.0%
+DATA                 0      0      27      0.0%
+
+
+Microchip Technology PIC Macro Assembler V3.00 build 20241204225717 
+Symbol Table                                                                                   Fri Feb 14 21:09:28 2025
+
+                     l41 003C                       l34 027D                       l42 004D  
+                     l51 0073                       l70 0109                       l54 0086  
+                     l39 0036                       l48 0060                       l73 011C  
+                     l83 015A                       l76 0141                       l68 00FD  
+                     l94 019F                       l78 013D                       l96 01A2  
+                    l101 01D1                      l111 0214                      l104 01E4  
+                    l121 025F                      l107 0218                      l118 0242  
+                    l932 0266                      l940 0024                      l934 0270  
+                    l950 0053                      l942 0025                      l960 0077  
+                    l952 0057                      l944 0026                      l936 001B  
+                    l970 0091                      l954 0064                      l962 007B  
+                    l946 0028                      l938 0021                      l980 00A7  
+                    l972 0098                      l964 007F                      l956 006D  
+                    l948 0042                      l990 00BB                      l982 00A8  
+                    l974 009A                      l966 0080                      l992 00BE  
+                    l984 00AE                      l976 00A0                      l968 008F  
+                    l986 00AF                      l994 00C1                      l978 00A1  
+                    l988 00B5                      l996 00C4                      l998 00C7  
+                    u420 0270                      u500 008F                      u421 026F  
+                    u501 008E                      u510 0098                      u511 0097  
+                    u600 011C                      u520 00A0                      u440 003C  
+                    u601 011B                      u521 009F                      u441 003B  
+                    u434 0278                      u610 0120                      u530 00A7  
+                    u450 0042                      u435 0276                      u611 011F  
+                    u531 00A6                      u451 0041                      u700 01D5  
+                    u620 0128                      u540 00AE                      u460 0064  
+                    _ISR 027E                      u701 01D4                      u621 0127  
+                    u541 00AD                      u461 0063                      u710 01E4  
+                    u630 0137                      u550 00B5                      u470 0073  
+                    u711 01E3                      u631 0136                      u551 00B4  
+                    u471 0072                      u800 0246                      u720 01E8  
+                    u640 0141                      u560 00BB                      u480 0077  
+                    u801 0245                      u721 01E7                      u641 0140  
+                    u561 00BA                      u481 0076                      u810 025F  
+                    u730 01EE                      u650 0145                      u570 00F6  
+                    u490 007F                      u811 025E                      u731 01ED  
+                    u651 0144                      u571 00F5                      u491 007E  
+                    u740 01FD                      u660 0154                      u580 00FD  
+                    u741 01FC                      u661 0153                      u581 00FC  
+                    u750 0208                      u670 015E                      u590 010D  
+                    u751 0207                      u671 015D                      u591 010C  
+                    u760 0218                      u680 019F                      u761 0217  
+                    u681 019E                      u770 021C                      u690 01AB  
+                    u771 021B                      u907 01F2                      u691 01AA  
+                    u780 022B                      u781 022A                      u917 0220  
+                    u837 002E                      u790 0235                      u791 0234  
+                    u847 0068                      u857 0111                      u867 012C  
+                    u877 0149                      u887 01C9                      u897 01D9  
+                    fsr0 0004                      indf 0000                     ?_ISR 0070  
+                   l1000 00CA                     l1010 00D8                     l1002 00D0  
+                   l1100 022B                     l1020 0104                     l1012 00E5  
+                   l1102 0235                     l1110 0256                     l1022 010D  
+                   l1030 0124                     l1014 00ED                     l1104 023C  
+                   l1040 014E                     l1032 0128                     l1024 0116  
+                   l1008 00D2                     l1016 00F6                     l1106 0246  
+                   l1050 016A                     l1042 0154                     l1034 0131  
+                   l1018 0100                     l1108 024D                     l1052 016D  
+                   l1060 018E                     l1044 015F                     l1036 0137  
+                   l1028 0120                     l1070 01AE                     l1054 0170  
+                   l1046 0164                     l1038 0145                     l1062 0197  
+                   l1064 01A5                     l1072 01BB                     l1048 0167  
+                   l1090 01FD                     l1082 01E8                     l1074 01C3  
+                   l1066 01AB                     l1058 0175                     l1092 0208  
+                   l1076 01D5                     l1084 01EA                     l1094 020E  
+                   l1086 01EE                     l1078 01DE                     l1190 017A  
+                   l1096 021C                     l1088 01F7                     l1192 01B3  
+                   l1098 0225                     _main 001B                     btemp 007E  
+                   start 000C                    ??_ISR 0070                    ?_main 0070  
+                  _T1CON 0010                    i1l130 028B                    _TMR1H 000F  
+                  _TMR1L 000E                    _PORTB 0006                    _TRISB 0086  
+                  u82_20 0284                    u82_21 0283                    main@x 0025  
+                  pclath 000A                    status 0003                    wtemp0 007E  
+        __initialization 000F             __end_of_main 0266                   ??_main 0075  
+                 i1l1124 027E                   i1l1126 0284                   i1l1128 0285  
+                 saved_w 007E  __end_of__initialization 0017           __pcstackCOMMON 0070  
+             __pbssBANK0 002D               __pmaintext 001B               __pintentry 0004  
+                _CCP1CON 0017                  __ptext1 0266                  __ptext2 027E  
+    main@selectedDigitNo 002B                  main@sec 0020     end_of_initialization 0017  
+      __end_of_showDigit 027E                _PORTCbits 0007                _PORTDbits 0008  
+              _TRISCbits 0087                _TRISDbits 0088      start_initialization 000F  
+            __end_of_ISR 0292          main@digitMaxVal 0022                ___latbits 0002  
+          __pcstackBANK0 0020           showDigit@digit 0072        interrupt_function 0004  
+               _PIE1bits 008C                 _PIR1bits 000C                _showDigit 0266  
+              main@F1013 002D                main@digit 0027               ?_showDigit 0072  
+               main@mode 0023               _INTCONbits 000B                 intlevel1 0000  
+            ??_showDigit 0074           _interruptCount 0031  

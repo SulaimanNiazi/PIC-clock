@@ -1,0 +1,4 @@
+C:/Users/mehna/Documents/MPlab projects/PIC Clock.X/_build/PIC Clock/default/CMakeFiles/PIC_Clock_default_default_XC8_compile.dir
+C:/Users/mehna/Documents/MPlab projects/PIC Clock.X/_build/PIC Clock/default/CMakeFiles/PIC_Clock_default_Build_File.hex.dir
+C:/Users/mehna/Documents/MPlab projects/PIC Clock.X/_build/PIC Clock/default/CMakeFiles/edit_cache.dir
+C:/Users/mehna/Documents/MPlab projects/PIC Clock.X/_build/PIC Clock/default/CMakeFiles/rebuild_cache.dir
